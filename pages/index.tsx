@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Scroll from '../components/Scroll';
 
 const Home: NextPage = () => {
   return (
@@ -9,8 +10,8 @@ const Home: NextPage = () => {
         <title>3D Portfolio</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Scroll/>
 
-  
    </div>
   )
 }

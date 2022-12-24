@@ -2,6 +2,8 @@ import React, {useEffect, useState, useRef} from 'react'
 import * as THREE from 'three'
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import gsap from 'gsap'
+import {DivContainer, DivSpinner} from './ScrollPage';
+import {loadGLTFModel} from '../lib/model'
 
 const ScrollModelAnimation = () => {
   const [loading, setLoading] = useState(true)
@@ -20,8 +22,12 @@ const ScrollModelAnimation = () => {
 
     if(container && !renderer){
       //Texture
-      const textureLoader = new THREE.TextureLoader()
+      const textureLoader = new THREE.TextureLoader();
+      const eartTexture = textureLoader.load('/textures/earth.jpeg')
+      const moonTexture = textureLoader.load('/textures/moon/moon.jpeg')
+      const sunTexture = textureLoader.load('/textures/sun/sun.jpeg')
       const gradientTexture = textureLoader.load('/textures/gradients/3.jpg');
+      gradientTexture.magFilter = THREE.NearestFilter;
       const particlesTexture = textureLoader.load('/textures/particles/1.png');
       //Material
       const material = new THREE.MeshToonMaterial({
@@ -30,16 +36,39 @@ const ScrollModelAnimation = () => {
       });
 
       //Object
+
+      loadGLTFModel(scene, '/Desktop.glb',{
+        receiveShadow:true,
+        castShadow: true,
+      }).then(() => {
+        setLoading(false);
+      })
+
+
       const objectDistance = 4
       const mesh1 = new THREE.Mesh(
         new THREE.TorusGeometry(1,0.4,16,60),
         material
-      )
+      );
 
-      const mesh2 = new THREE.Mesh(new THREE.SphereGeometry(1),material);
-      const mesh3 = new THREE.Mesh(new THREE.SphereGeometry(1),material);
-      const mesh4 = new THREE.Mesh(new THREE.SphereGeometry(1),material);
-      const mesh5 = new THREE.Mesh(new THREE.SphereGeometry(1),material);
+      const mesh2 = new THREE.Mesh(new THREE.SphereGeometry(1),
+      new THREE.MeshStandardMaterial({
+        map: moonTexture,
+      }));
+
+      const mesh3 = new THREE.Mesh(new THREE.SphereGeometry(1),
+      new THREE.MeshStandardMaterial({
+        map: eartTexture,
+      }));
+      const mesh4 = new THREE.Mesh(new THREE.SphereGeometry(1),
+      new THREE.MeshStandardMaterial({
+        map: sunTexture,
+      }));
+      const mesh5 = new THREE.Mesh(new THREE.SphereGeometry(1),
+      new THREE.MeshStandardMaterial({
+        color: 'red',
+        wireframe: true,
+      }));
 
       mesh1.position.x =  3;
       mesh2.position.x = -3;
@@ -55,6 +84,7 @@ const ScrollModelAnimation = () => {
 
       scene.add(mesh1, mesh2, mesh3, mesh4, mesh5);
       const sectionMeshes = [mesh1, mesh2, mesh3, mesh4, mesh5];
+      mesh1.visible = false;
 
       //Lights
       const directioanlLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -218,8 +248,8 @@ const ScrollModelAnimation = () => {
   },[]);
 
   return (
-    <div>ScrollModelAnimation</div>
-  )
-}
+    <DivContainer ref={refContainer}>{loading && <DivSpinner/>}</DivContainer>
+  );
+};
 
 export default ScrollModelAnimation
