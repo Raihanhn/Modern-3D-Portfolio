@@ -1,6 +1,8 @@
 import {forwardRef} from "react"
 import Hero from './Hero'
 import About from './About'
+import Skills from './Skills'
+import Projects from './Projects'
 
 export const DivSpinner = () => <div>Loading...</div>
 
@@ -15,9 +17,13 @@ export const DivContainer = forwardRef(({children}, ref) =>(
         <About/>
       </section>
 
-      <section className="flex items-center h-[100vh] relative text-lg uppercase pl-[10%] pr-[10%] pt-[100px] font-neue text-[#ffeded]" >Section3</section>
+      <section className="flex items-center h-[100vh] relative text-lg uppercase pl-[10%] pr-[10%] pt-[100px] font-neue text-[#ffeded]" >
+        <Skills/>
+      </section>
 
-      <section className="flex items-center h-[100vh] relative text-lg uppercase pl-[10%] pr-[10%] text-[#ffeded] justify-end" >Section4</section>
+      <section className="flex items-center h-[100vh] relative text-lg uppercase pl-[10%] pr-[10%] text-[#ffeded] justify-end" >
+        <Projects/>
+      </section>
 
       <section className="flex items-center h-[100vh] relative text-lg uppercase pl-[10%] pr-[10%] text-[#ffeded]" >Section5</section>
     </>

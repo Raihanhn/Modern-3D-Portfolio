@@ -10,7 +10,7 @@ import {
 
   const About = () => {
     return (
-      <div className="flex flex-col items-center justify-center text-center bg-[#1e293b] p-4 ml-[200px]">
+      <div className="flex flex-col items-center justify-center text-center bg-[#1e293b] p-4 ml-[250px]">
         <div className="pb-2 text-center font-inter">
           <h2 className="text-4xl font-bold">About Me</h2>
         </div>
